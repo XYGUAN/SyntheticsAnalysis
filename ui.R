@@ -9,40 +9,48 @@ dashboardPage(
       menuItem("Analysis", tabName = "analysis", icon = icon("th")),
       menuItem("Exploration", tabName = "explore", icon = icon("cog"))
     ),
-    selectInput("state", "Please choose the state:", states.names),
-    selectInput("target", "Please choose the target variable:", output.variables),
-    sliderInput("min_split", "Please choose the min_split parameter", 1,20,5),
-    sliderInput("max_depth", "Please choose the max_depth parameter", 1,20,5),
-    helpText("asdfasdfsad")
+    selectInput("prevalance", "Please choose the prevalance:", prevalances_names, 
+                selectize = TRUE, multiple = TRUE), 
+    sliderInput("top_n_relevant_prevalance", "top_n relevant prevalance", 1,20,5)
   ),
   
   dashboardBody(
     tabItems(
       tabItem(tabName = "dashboard",
+              
               fluidRow(
-                valueBoxOutput("NoCountiesBox")
-              ),
+                box(htmlOutput("description"), width = 12)
+              ), 
+              
               fluidRow(
-                box(plotOutput("DecitionTree"),width = 12)
+                box(plotOutput("relevant_prevalance_plot", height = "250px"), width = 12)
+              ), 
+              
+              fluidRow(
+                box(plotOutput("single_gender_plot", height = "250px"), width = 4), 
+                box(plotOutput("single_race_plot", height = "250px"), width = 8)
+              ), 
+              
+              fluidRow(
+                
+                box(plotOutput("age_density_plot", height = "150px"), width = 6), 
+                box(plotOutput("weight_density_plot", height = "150px"), width = 6)
               )
+              
+              
+            
+              
       ),
+      
       
       tabItem(tabName = "analysis",
               fluidRow(
                 box(plotOutput("Analysis"),width = 12)
               )
               
-      ),
+      )
       
-      tabItem(tabName = "explore",
-              fluidRow(
-                box(
-                  title = "Controls",
-                  selectInput("state.table", "Please choose the state:", states.names),
-                  textInput("condition", "Please type the condition, use , to seperate")
-                ),
-                box(tableOutput("Condition"))
-              ))
+
     )
     
   )
