@@ -1,0 +1,12 @@
+name: SyntheticsAnalysis
+title: SyntheticsAnalysis
+username:
+account: xiuyangguan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 243492
+bundleId: 1112471
+url: https://xiuyangguan.shinyapps.io/SyntheticsAnalysis/
+when: 1512335461.19465
+asMultiple: FALSE
+asStatic: FALSE
