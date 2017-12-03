@@ -80,7 +80,7 @@ personality_prevalances <- function(input_prevalance, data_reference, top_n_rele
       ylab("percentage") + 
       coord_flip() + 
       theme(axis.text.y = element_text(angle = 45, hjust = 1)) + 
-      ggtitle("Relevant prevalances") + 
+      ggtitle(paste("Relevant prevalances with", input_prevalance)) + 
       theme(plot.title = element_text(hjust = 0.5))
   
   # Combine to the results
