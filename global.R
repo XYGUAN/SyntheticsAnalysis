@@ -77,6 +77,7 @@ personality_prevalances <- function(input_prevalance, data_reference, top_n_rele
       geom_bar(position='fill') +
       scale_fill_brewer(palette="Set2") +
       xlab("prevalance") + 
+      ylab("percentage") + 
       coord_flip() + 
       theme(axis.text.y = element_text(angle = 45, hjust = 1)) + 
       ggtitle("Relevant prevalances") + 

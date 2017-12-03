@@ -17,9 +17,9 @@ shinyServer(function(input, output) {
       "patients for the prevalance:", 
       paste("<b>", input$prevalance, "</b><br/>"), 
       "The average age is",
-      paste("<b>", round(description$age[9]), "</b><br/>"),
+      paste("<b>", round(description$age[9]), "years old", "</b><br/>"),
       "The average weight is", 
-      paste("<b>", round(description$weight[9]), "</b>"))
+      paste("<b>", round(description$weight[9]), "pounds", "</b>"))
     )
     
 

@@ -1,6 +1,7 @@
 library(shinydashboard)
 
 dashboardPage(
+  
   dashboardHeader(title = "Synthetics Analysis"),
   
   dashboardSidebar(
