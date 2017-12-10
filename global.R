@@ -1,10 +1,29 @@
+# library(plotly)
 library(dplyr)
 library(ggplot2)
 library(pastecs)
+library(reshape2)
+library(arules)
+library(arulesViz)
+library(visNetwork)
+library(igraph)
 
 patients_data_clean_10000 <- read.csv("data/patients_data_clean_10000.csv")
 patients_data_clean_10000 <- tbl_df(patients_data_clean_10000)
 prevalances_names <- names(table(patients_data_clean_10000$prevalances))
+
+data_to_transaction <- function(input_data){
+  input_data$prevalances <- as.character(input_data$prevalances)
+  transformed_data <- 
+    input_data %>%
+    select(patients_ID, prevalances) %>%
+    group_by(patients_ID) %>%
+    mutate(items = paste0(prevalances, collapse = ","))
+  
+  result <- unique(transformed_data$items)
+  result <- result[which(result != "NA")]
+  return(result)
+}
 
 personality_prevalances <- function(input_prevalance, data_reference, top_n_relevant_prevalance){
   top_n_relevant_prevalance <- top_n_relevant_prevalance + 1
@@ -93,5 +112,11 @@ personality_prevalances <- function(input_prevalance, data_reference, top_n_rele
   
   return(result_list)
 }
+
+# patients_data_transaction <- data_to_transaction(patients_data_clean_10000)
+# write.table(patients_data_transaction, "./data/patients_transaction.csv", row.names = FALSE, col.names = FALSE, sep = ",")
+prevalances_items <- read.transactions("./data/patients_transaction.csv", sep = ",", 
+                                       quote = "", encoding = "UTF-8")
+
 
 

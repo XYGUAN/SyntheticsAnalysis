@@ -1,3 +1,5 @@
+# The author is Xiuyang Guan
+
 library(shinydashboard)
 library(dplyr)
 
@@ -26,7 +28,7 @@ shinyServer(function(input, output) {
     number_patients_targeted <- 
       patients_data_clean_10000 %>% 
         filter(prevalances == input$prevalance) %>%
-        nrow()
+        nrow() 
     valueBox(
       number_patients_targeted, "Targeted patients", 
       color = "red"
@@ -38,20 +40,21 @@ shinyServer(function(input, output) {
     description <- analysis$descrition
     
     valueBox(
-      round(description$weight[9]), "Average weigths",
+      paste(round(description$age[1]/max(patients_data_clean_10000$patients_ID), 3) * 100, "%", sep = ""), 
+      "weigths",
       color = "orange"
     )
   })
   
-  output$Average_age <- renderValueBox({
-    analysis <- personality_prevalances(input$prevalance, patients_data_clean_10000, input$top_n_relevant_prevalance)
-    description <- analysis$descrition
-    
-    valueBox(
-      round(description$age[9]), "Average age",
-      color = "yellow"
-    )
-  })
+  # output$Average_age <- renderValueBox({
+  #   analysis <- personality_prevalances(input$prevalance, patients_data_clean_10000, input$top_n_relevant_prevalance)
+  #   description <- analysis$descrition
+  #   
+  #   valueBox(
+  #     round(description$age[9]), "Average age",
+  #     color = "yellow"
+  #   )
+  # })
   
   
   # The texts
@@ -70,8 +73,6 @@ shinyServer(function(input, output) {
       "The average weight is", 
       paste("<b>", round(description$weight[9]), "pounds", "</b>"))
     )
-    
-
     
   })
   
@@ -102,10 +103,24 @@ shinyServer(function(input, output) {
     print(analysis$relevant_prevalance_plot)
   })
   
+  output$association_rules_net_plot_to_target <- renderPlot({
+    selected_prevalance_association <- input$prevalance_association
+    rules <- apriori(data = prevalances_items, parameter=list(support=0.001, confidence=0.001), 
+                     appearance = list(default="lhs", rhs = selected_prevalance_association), 
+                     control = list(verbose = F))
+    subrules2 <- head(sort(rules, by="lift"), 10)
+    plot(subrules2, method="graph", control=list(type="items") )
+
+  })
   
-  
-  
-  
-  
+  output$association_rules_net_plot_from_target <- renderPlot({
+    selected_prevalance_association <- input$prevalance_association
+    rules <- apriori(data = prevalances_items, parameter=list(support=0.001, confidence=0.001), 
+                     appearance = list(default="rhs", lhs = selected_prevalance_association), 
+                     control = list(verbose = F))
+    subrules2 <- head(sort(rules, by="lift"), 10)
+    plot(subrules2, method="graph", control=list(type="items") )
+    
+  })
   
 })

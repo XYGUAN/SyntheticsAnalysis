@@ -13,7 +13,10 @@ dashboardPage(
     selectInput("prevalance", "Please choose the prevalance:", prevalances_names, 
                 selectize = FALSE, selected = "drug_overdose"), 
     sliderInput("top_n_relevant_prevalance", "top_n relevant prevalance", 1,20,5), 
-    sliderInput("total_patients_number", "total patients number", 1,56686,56686, step = 100)
+    sliderInput("total_patients_number", "total patients number", 1,56686,56686, step = 100), 
+    
+    selectInput("prevalance_association", "Please choose the prevalance for association rules:", 
+                prevalances_names, selectize = FALSE, selected = "drug_overdose")
   ),
   
   dashboardBody(
@@ -21,10 +24,10 @@ dashboardPage(
       tabItem(tabName = "dashboard",
               
               fluidRow(
-                valueBoxOutput("Total_Patient_Box", width = 3), 
-                valueBoxOutput("Target_Patient_Box", width = 3), 
-                valueBoxOutput("Average_weight", width = 3), 
-                valueBoxOutput("Average_age", width = 3)
+                valueBoxOutput("Total_Patient_Box", width = 4), 
+                valueBoxOutput("Target_Patient_Box", width = 4), 
+                valueBoxOutput("Average_weight", width = 4)
+                # valueBoxOutput("Average_age", width = 3)
               ), 
               
               fluidRow(
@@ -49,15 +52,19 @@ dashboardPage(
               
             
               
-      ),
-      
+      ), 
       
       tabItem(tabName = "analysis",
+              
               fluidRow(
-                box(plotOutput("Analysis"),width = 12)
+                box(plotOutput("association_rules_net_plot_to_target"), width = 6), 
+                box(plotOutput("association_rules_net_plot_from_target"), width = 6)
+                
               )
               
       )
+      
+      
       
 
     )
