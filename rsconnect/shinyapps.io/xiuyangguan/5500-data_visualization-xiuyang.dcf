@@ -1,0 +1,12 @@
+name: 5500-data_visualization-xiuyang
+title: 5500-Data Visualization-Xiuyang
+username:
+account: xiuyangguan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 245268
+bundleId: 1119842
+url: https://xiuyangguan.shinyapps.io/5500-data_visualization-xiuyang/
+when: 1512600590.4941
+asMultiple: FALSE
+asStatic: FALSE
